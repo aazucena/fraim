@@ -1,0 +1,15 @@
+
+<template>
+  <div id="app">
+    <div id="view-home" class="view view-main view-init" data-url="/">
+      <!-- Home page will be loaded here dynamically from / route -->
+    </div>
+
+
+  </div>
+</template>
+<script>
+  export default (props, { $f7, $update }) => {
+    return $render;
+  }
+</script>

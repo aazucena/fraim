@@ -1,0 +1,36 @@
+{
+  "cwd": "/mnt/g/THISISLAPTOP2N1/Documents/University/8 - Fall 2022/NMED 3630/Exercises/Exercise 4/fraim",
+  "type": [
+    "cordova"
+  ],
+  "name": "Fraim",
+  "framework": "core",
+  "template": "tabs",
+  "bundler": "vite",
+  "cssPreProcessor": "scss",
+  "theming": {
+    "customColor": true,
+    "color": "#f59529",
+    "darkTheme": false,
+    "iconFonts": true,
+    "fillBars": false
+  },
+  "customBuild": false,
+  "pkg": "io.framework7.fraim",
+  "cordova": {
+    "folder": "cordova",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "plugins": [
+      "cordova-plugin-statusbar",
+      "cordova-plugin-keyboard",
+      "cordova-plugin-splashscreen",
+      "cordova-plugin-device",
+      "cordova-plugin-inappbrowser",
+      "cordova-plugin-file",
+      "cordova-plugin-media"
+    ]
+  }
+}

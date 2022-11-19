@@ -1,0 +1,33 @@
+<template>
+  <div class="page" data-name="home">
+    <!-- Top Navbar -->
+    <div class="navbar navbar-transparent">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner">
+        <div class="title-sliding">
+          <div class="title-large-text">Fraim</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fab fab-center-bottom color-red padding-2">
+      <a href="#">
+        <i class="icon f7-icons if-not-md">plus</i>
+        <i class="icon material-icons md-only">add</i>
+      </a>
+    </div>
+    <!-- Scrollable page content-->
+    <div class="page-content">
+      <div class="block block-strong">
+        <p>This is an example of tabs-layout application. The main point of such tabbed layout is that each tab contains independent view with its own routing and navigation.</p>
+
+        <p>Each tab/view may have different layout, different navbar type (dynamic, fixed or static) or without navbar like this tab.</p>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+export default () => {
+  return $render;
+}
+</script>
