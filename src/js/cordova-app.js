@@ -1,3 +1,5 @@
+import jQuery from 'jquery'
+
 var cordovaApp = {
   f7: null,
   /*
@@ -142,23 +144,6 @@ var cordovaApp = {
       true,
     );
   },
-
-  // handleCamera: function() {
-  //   var f7 = cordovaApp.f7;
-  //   if (!window.navigator.camera || !window.Camera ||!window.navigator.camera.getPicture || f7.device.electron) return;
-  //   var $ = f7.$;
-  //   $('.camera-button').on('click', () => {
-  //     window.navigator.camera.getPicture((metadata) => {
-  //       console.log(metadata)
-  //       resolveLocalFileSystemURL(metadata, (entry) => {
-  //         var img = entry.toURL()
-  //         console.log(img)
-  //       }, () => { console.log('Photo not taken') })
-  //     }, () => { console.log('Photo not taken') },
-  //     { quality: 100, destinationType: window.Camera.DestinationType.FILE_URI })
-  //   })
-
-  // },
 
   init: function (f7) {
     // Save f7 instance

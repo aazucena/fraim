@@ -1,34 +1,38 @@
 
 import { createStore } from 'framework7';
+import moment from 'moment'
+
 
 const store = createStore({
   state: {
-    products: [
+    mediaFiles: [
       {
-        id: '1',
-        title: 'Apple iPhone 8',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.'
-      },
-      {
-        id: '2',
-        title: 'Apple iPhone 8 Plus',
-        description: 'Velit odit autem modi saepe ratione totam minus, aperiam, labore quia provident temporibus quasi est ut aliquid blanditiis beatae suscipit odio vel! Nostrum porro sunt sint eveniet maiores, dolorem itaque!'
-      },
-      {
-        id: '3',
-        title: 'Apple iPhone X',
-        description: 'Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum.'
-      },
+        path: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/640px-Image_created_with_a_mobile_phone.png",
+        date_created: moment().format('YY-MM-DD'),
+      }
     ]
   },
   getters: {
-    products({ state }) {
-      return state.products;
+    mediaFiles({ state }) {
+      return state.mediaFiles;
     }
   },
   actions: {
-    addProduct({ state }, product) {
-      state.products = [...state.products, product];
+    addMediaFile({ state }, { path }) {
+      let mediaFile = {
+        path,
+        date_created: moment().format('YY-MM-DD')
+      }
+      console.log("🚀 ~ file: store.js ~ line 18 ~ addMediaFile ~ mediaFile", mediaFile)
+      state.mediaFiles = [...state.mediaFiles, mediaFile]
+      console.log("🚀 ~ file: store.js ~ line 23 ~ addMediaFile ~ state.mediaFiles", state.mediaFiles)
+    },
+    deleteMediaFile({ state }, { path }) {
+      
+      var tmp = state.mediaFiles
+      var index = state.mediaFiles.findIndex((file) => file.path === path)
+      delete tmp[index]
+      state.mediaFiles = tmp
     },
   },
 })

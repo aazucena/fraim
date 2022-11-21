@@ -9,6 +9,32 @@
   --f7-theme-color-rgb: 245, 149, 41;
   --f7-theme-color-shade: #ea810b;
   --f7-theme-color-tint: #f7a850;
+  --f7-font-family: 'Montserrat', sans-serif !important;
 }
 
+
 /* Your app custom styles here */
+
+@for $i from 0 through 100 {
+  .fs-#{$i} {
+    font-size: calc($i * 0.25rem) !important;
+  }
+}
+
+$font-weights: (
+  "thin": 100,
+  "xlight": 200,
+  "light": 300,
+  "regular": 400,
+  "medium": 500,
+  "semibold": 600,
+  "bold": 700,
+  "xbold": 800,
+  "black": 900,
+);
+
+@each $name, $fw in $font-weights {
+  .fw-#{$name} {
+    font-weight: $fw !important;
+  }
+}

@@ -3,31 +3,80 @@
     <!-- Top Navbar -->
     <div class="navbar navbar-transparent">
       <div class="navbar-bg"></div>
-      <div class="navbar-inner">
-        <div class="title-sliding">
-          <div class="title-large-text">Fraim</div>
+      <div class="navbar-inner padding-top">
+        <div class="left padding-left">
+          <div class="title-text fw-semibold fs-7">Fraim</div>
+        </div>
+        <div class="right">
+          <a href="#" class="link icon-only" >
+            <i class="icon f7-icons if-not-md">gear_alt_fill</i>
+            <i class="icon material-icons md-only">settings</i>
+          </a>
         </div>
       </div>
     </div>
 
-    <div class="fab fab-center-bottom color-red padding-2">
-      <a href="#">
+    <div class="fab fab-right-bottom padding-bottom">
+      <a href="#" >
         <i class="icon f7-icons if-not-md">plus</i>
+        <i class="icon f7-icons if-not-md">xmark</i>
         <i class="icon material-icons md-only">add</i>
+        <i class="icon material-icons md-only">close</i>
       </a>
+      <div class="fab-buttons fab-buttons-top">
+        <a class="fab-label-button" href="#" id="camera-button" @click=${openCamera}>
+          <span>
+            <i class="icon f7-icons if-not-md">camera_fill</i>
+            <i class="icon material-icons md-only">photo_camera</i>
+          </span>
+          <span class="fab-label">Take a Picture</span>
+        </a>
+      </div>
     </div>
     <!-- Scrollable page content-->
     <div class="page-content">
-      <div class="block block-strong">
-        <p>This is an example of tabs-layout application. The main point of such tabbed layout is that each tab contains independent view with its own routing and navigation.</p>
-
-        <p>Each tab/view may have different layout, different navbar type (dynamic, fixed or static) or without navbar like this tab.</p>
+      <div class="block-title no-margin-bottom"> ${files.value.length > 1 ? `${files.value.length} images` : `${files.value.length} image`}</div>
+      <div class="grid-layout display-flex flex-direction-column justify-content-start">
+        <div class="row w-100 justify-content-start">
+          ${files.value.map(({ path }, index) => $h`<${ImageListIndex} src=${path} index=${index}/>`)}
+        </div>
       </div>
     </div>
   </div>
 </template>
+  <style>
+    .col {
+        padding: 1rem;
+    }
+    .grid-layout {
+        --f7-grid-row-gap: 2rem;
+        padding: 0.75rem;
+    }
+</style>
 <script>
-export default () => {
+import ImageListIndex from '@/components/image_list_index.f7'
+export default (props, { $, $store, $on }) => {
+  const openCamera = () => {
+    var opt = { quality: 100, destinationType: Camera.DestinationType.FILE_URI }
+    console.log("🚀 ~ file: cordova-app.js ~ line 150 ~ opt", opt)
+    let onError = () => { console.log('Photo not taken') }
+    let onSuccess = (metadata) => {
+      console.log(metadata)
+      resolveLocalFileSystemURL(metadata, (entry) => {
+        var img = entry.toURL()
+        console.log(img)
+        $store.dispatch('addMediaFile', { path: img })
+      }, onError)
+    }
+    console.log('Click')
+    navigator.camera.getPicture(onSuccess, onError, opt)
+  }
+  const files = $store.getters.mediaFiles
+  var size = files.value.length
+  var cols = 3
+  var rows = Math.ceil(files.value.length/cols)
+  $on('pageInit', () => {
+  })
   return $render;
 }
 </script>
