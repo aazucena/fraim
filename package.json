@@ -13,8 +13,10 @@
     "build-cordova-ios": "cross-env TARGET=cordova cross-env NODE_ENV=production vite build && node ./build/build-cordova.js && npm run copy-assets && cd cordova && npx cordova build ios",
     "cordova-ios": "cross-env TARGET=cordova cross-env NODE_ENV=production vite build && node ./build/build-cordova.js && npm run copy-assets && cd cordova && npx cordova run ios",
     "build-cordova-android": "cross-env TARGET=cordova cross-env NODE_ENV=production vite build && node ./build/build-cordova.js && npm run copy-assets && cd cordova && npx cordova build android",
+    "cordova-watch-ios": "cross-env TARGET=cordova cross-env NODE_ENV=production vite build && node ./build/build-cordova.js && npm run copy-assets && cd cordova && npx cordova serve ios --live-reload",
     "cordova-android": "cross-env TARGET=cordova cross-env NODE_ENV=production vite build && node ./build/build-cordova.js && npm run copy-assets && cd cordova && npx cordova run android",
     "cordova-add-android": "cd cordova && npx cordova platform add android",
+    "cordova-watch-android": "cross-env TARGET=cordova cross-env NODE_ENV=production vite build && node ./build/build-cordova.js && npm run copy-assets && cd cordova && npx cordova serve android --live-reload",
     "postinstall": "cpy --flat ./node_modules/framework7-icons/fonts/*.* ./src/fonts/ && cpy --flat ./node_modules/material-icons/iconfont/*.* ./src/fonts/",
     "copy-assets": "cpy ./src/assets/** ./cordova/www/assets/",
     "cordova-plugin-install": "cd cordova && npx cordova plugin add"

@@ -8,30 +8,45 @@ const store = createStore({
     mediaFiles: [
       {
         path: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/640px-Image_created_with_a_mobile_phone.png",
-        date_created: moment().format('YY-MM-DD'),
+        date_created: moment().format('YYYY-MM-DD'),
+        favorite: false,
+      },
+      {
+        path: "https://assets.zoom.us/images/en-us/desktop/generic/virtual-background-green-screen-example.jpg",
+        date_created: moment().format('YYYY-MM-DD'),
+        favorite: true,
       }
     ]
   },
   getters: {
     mediaFiles({ state }) {
-      return state.mediaFiles;
+      return state.mediaFiles
     }
   },
   actions: {
+    getMediaFile({ state }, { path }) {
+      var tmp = state.mediaFiles
+      var index = state.mediaFiles.findIndex((file) => file.path === path)
+      return tmp[index]
+    },
     addMediaFile({ state }, { path }) {
       let mediaFile = {
         path,
-        date_created: moment().format('YY-MM-DD')
+        date_created: moment().format('YYYY-MM-DD'),
+        favorite: false,
       }
-      console.log("🚀 ~ file: store.js ~ line 18 ~ addMediaFile ~ mediaFile", mediaFile)
       state.mediaFiles = [...state.mediaFiles, mediaFile]
-      console.log("🚀 ~ file: store.js ~ line 23 ~ addMediaFile ~ state.mediaFiles", state.mediaFiles)
     },
-    deleteMediaFile({ state }, { path }) {
-      
+    deleteMediaFile({ state }, { index }) {
+      console.log("🚀 ~ file: store.js ~ line 41 ~ deleteMediaFile ~ index", index)
+      state.mediaFiles.splice(index, 1)
+      console.log("🚀 ~ file: store.js ~ line 43 ~ deleteMediaFile ~ state.mediaFiles", state.mediaFiles)
+      state.mediaFiles = state.mediaFiles
+    },
+    toggleFavorite({ state }, { path }) {
       var tmp = state.mediaFiles
       var index = state.mediaFiles.findIndex((file) => file.path === path)
-      delete tmp[index]
+      tmp[index].favorite = !tmp[index].favorite
       state.mediaFiles = tmp
     },
   },

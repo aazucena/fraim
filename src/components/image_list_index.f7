@@ -1,6 +1,6 @@
 <template>
-    <div @click=${onClickPhotoBrowser} class="col-33 resizable display-flex justify-content-center">
-        <img src=${path} id=${index} class="img-fluid rounded"/>
+    <div key="${index}-${path}" @click=${onClickPhotoBrowser} class="col-33 resizable display-flex justify-content-center">
+        <img src=${path} id=${index} class="img-fluid rounded lazy lazy-fade-in"/>
     </div>
 </template>
 <style>
@@ -18,13 +18,95 @@
     }
 </style>
 <script>
-    export default (props, { $, $f7, $onMounted, $store}) => {
-        const path = props.src
+    export default (props, { $, $on, $onMounted, $f7, $store, $update }) => {
+        var checked = $('body').hasClass('dark')
+        const path = props.image.path
+        var img
+        const favorite = props.image.favorite
         const index = `image-${props.index}`
         var photo_browser = $f7.photoBrowser.create({
             photos: [path],
             navbarShowCount: false,
             type: 'popup',
+            popupCloseLinkText: `<i class="icon f7-icons">xmark</i>`,
+            theme: checked === true ? 'dark' : 'light',
+            renderNavbar: () => {
+                var navbar = `
+                <div class="navbar">
+                    <div class="navbar-bg"></div>
+                    <div class="navbar-inner padding-top">
+                        <div class="left">
+                            <a href="#" class="link popup-close icon-only" data-popup=".photo-browser-popup">
+                                <i class="icon icon-back"></i>
+                            </a>
+                        </div>
+                        <div class="right">
+                        </div>
+                    </div>
+                </div>
+                `
+                return navbar
+            },
+            renderToolbar: () => {
+                var toolbar = `
+                <div class="toolbar tabbar toolbar-bottom no-shadow no-hairline">
+                    <div class="toolbar-inner">
+                        <a class="tab-link" id="favorite-${props.index}">
+                            <i class="icon f7-icons">suit_heart${img.favorite === true ? '_fill' : ''}</i>
+                        </a>
+                        <a class="tab-link" id="share-${props.index}">
+                            <i class="icon material-icons">share</i>
+                        </a>
+                        <a class="tab-link" id="delete-${props.index}">
+                            <i class="icon material-icons">delete</i>
+                        </a>
+                    </div>
+                </div>
+                `
+                return toolbar
+            },
+            on: {
+                opened: () => {
+                    $(`#favorite-${props.index}`).on('click', () => {
+                        $store.dispatch('toggleFavorite', { path })
+                        $store.dispatch('getMediaFile', { path }).then((image) => {
+                            $(`#favorite-${props.index}`).html(`<i class="icon f7-icons">suit_heart${image.favorite === true ? '_fill' : ''}</i>`)
+                            img = image
+                        })
+                    })
+                    $(`#share-${props.index}`).on('click', () => {
+                        var options = {
+                            message: 'Share This Image',
+                            subject: 'Image',
+                            files: [path], 
+                        }
+                        
+                        var onSuccess = (result) => {
+                            console.log("Share completed? " + result.completed)
+                            console.log("Shared to app: " + result.app)
+                        }
+                        
+                        var onError = function(msg) {
+                            console.log("Sharing failed with message: " + msg)
+                        }
+                        
+                        window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
+                        img = image
+                    })
+                    $(`#delete-${props.index}`).on('click', () => {
+                        $f7.dialog.confirm('Delete this image?', () => {
+                            photo_browser.close()
+                            $store.dispatch('deleteMediaFile', { index: props.index })
+                        })
+                    })
+                }
+            }
+        })
+        $onMounted(() => {
+            $store.dispatch('getMediaFile', { path }).then((image) => {
+                img = image
+                $update()
+            })
         })
         const onClickPhotoBrowser = () => {
             photo_browser.open()
