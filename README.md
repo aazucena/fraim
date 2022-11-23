@@ -61,6 +61,15 @@ npm install
 * 📱 `build-cordova-android` - build cordova Android app
 * 📱 `cordova-android` - run dev build cordova Android app
 
+
+## Run the Andriod App
+
+```bash
+npm install # 1. install dependencies 
+npm run cordova-add-android # 2. add android platform to cordova 
+npm run cordova-android # 3. run cordova android app
+```
+
 ## Vite
 
 There is a [Vite](https://vitejs.dev) bundler setup. It compiles and bundles all "front-end" resources. You should work only with files located in `/src` folder. Vite config located in `vite.config.js`.
