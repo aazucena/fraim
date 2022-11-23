@@ -62,7 +62,7 @@ npm install
 * 📱 `cordova-android` - run dev build cordova Android app
 
 
-## Run the Andriod App
+## Run the Android App
 
 ```bash
 npm install # 1. install dependencies 
