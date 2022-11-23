@@ -1,5 +1,5 @@
 <template>
-    <div key="${index}-${path}" @click=${onClickPhotoBrowser} class="col-33 resizable display-flex justify-content-center">
+    <div key="${index}-${path}" id="container-${index}" @click=${onClickPhotoBrowser} class="col-33 resizable display-flex justify-content-center">
         <img src=${path} id=${index} class="img-fluid rounded lazy lazy-fade-in"/>
     </div>
 </template>
@@ -23,20 +23,21 @@
         const path = props.image.path
         var img
         const favorite = props.image.favorite
+        const id = props.image.id
         const index = `image-${props.index}`
         var photo_browser = $f7.photoBrowser.create({
             photos: [path],
             navbarShowCount: false,
-            type: 'popup',
+            type: 'page',
             popupCloseLinkText: `<i class="icon f7-icons">xmark</i>`,
             theme: checked === true ? 'dark' : 'light',
             renderNavbar: () => {
                 var navbar = `
-                <div class="navbar">
+                <div class="navbar navbar-photo-browser">
                     <div class="navbar-bg"></div>
                     <div class="navbar-inner padding-top">
                         <div class="left">
-                            <a href="#" class="link popup-close icon-only" data-popup=".photo-browser-popup">
+                            <a href="/" class="link back icon-only">
                                 <i class="icon icon-back"></i>
                             </a>
                         </div>
@@ -95,8 +96,8 @@
                     })
                     $(`#delete-${props.index}`).on('click', () => {
                         $f7.dialog.confirm('Delete this image?', () => {
-                            photo_browser.close()
-                            $store.dispatch('deleteMediaFile', { index: props.index })
+                            $store.dispatch('deleteMediaFile', { id })
+                            window.f7.views.main.router.navigate({ path: '/'})
                         })
                     })
                 }

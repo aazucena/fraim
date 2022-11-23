@@ -39,12 +39,14 @@
         <div class="preloader"></div>
         <div class="ptr-arrow"></div>
       </div>
-      ${files.value.length > 0 && $h`
-        <div class="block-title no-margin-bottom"> ${files.value.length > 1 ? `${files.value.length} images` : `${files.value.length} image`}</div>`}
-      ${files.value.length > 0 ? $h`
+      ${images.length > 0 && $h`
+        <div class="block-title no-margin-bottom"> ${images.length > 1 ? `${images.length} images` : `${images.length} image`}</div>`}
+      ${images.length > 0 ? $h`
           <div class="grid-layout display-flex flex-direction-column justify-content-start">
             <div class="row w-100 justify-content-start">
-              ${files.value.map((image, index) => $h`<${ImageListIndex} image=${image} index=${index}/>`)}
+              ${images.map((image, index) => {
+                return $h`<${ImageListIndex} image=${image} index=${index}/>`
+              })}
             </div>
           </div>
       ` : $h`<div class="image-text-fallback fs-6 fw-medium"> No images available</div>`}
@@ -98,15 +100,27 @@ export default (props, { $, $f7, $store, $on, $update }) => {
     }
   }
   var files = {value: []}
+  var images = []
+  var size = 0
   $on('pageInit', () => {
     files = $store.getters.mediaFiles
-    console.log("🚀 ~ file: home.f7 ~ line 99 ~ $on ~ files", files)
+    images = files.value
+    files.onUpdated((imgs) => {
+        images = imgs
+        size = $('.resizable > img').length
+    })
+    size = $('.resizable > img').length
     $update()
   })
   const onRefresh = (e, done) => {
     setTimeout(() => {
       files = $store.getters.mediaFiles
-      console.log("🚀 ~ file: home.f7 ~ line 99 ~ $on ~ files", files)
+      images = files.value
+      files.onUpdated((imgs) => {
+        images = imgs
+        size = $('.resizable > img').length
+      })
+      size = $('.resizable > img').length
       $update()
       done()
     }, 2500)

@@ -37,7 +37,8 @@
     "material-icons": "^1.12.1",
     "moment": "^2.29.4",
     "skeleton-elements": "^4.0.1",
-    "swiper": "^8.4.4"
+    "swiper": "^8.4.4",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "cpy-cli": "^4.2.0",

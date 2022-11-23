@@ -35,7 +35,9 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-device": {},
       "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-file": {},
+      "cordova-plugin-file": {
+        "ANDROIDX_WEBKIT_VERSION": "1.4.0"
+      },
       "cordova-plugin-media": {},
       "cordova-plugin-media-capture": {},
       "cordova-plugin-camera": {
